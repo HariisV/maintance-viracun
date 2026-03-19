@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maintenance | Viracun CPNS</title>
+  <style>
+    :root {
+      --bg: #0a0b12;
+      --panel: #141725;
+      --panel-soft: #1b2033;
+      --text: #f5f7ff;
+      --muted: #b7bed7;
+      --primary: #6f4dff;
+      --primary-soft: #8b70ff;
+      --line: #2a314d;
+      --success: #1ec28b;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top, #10142a 0%, var(--bg) 45%);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1120px, calc(100% - 2rem));
+      margin-inline: auto;
+    }
+
+    .notice {
+      margin: 1.25rem auto;
+      padding: 0.75rem 1rem;
+      border: 1px solid #3a4264;
+      border-radius: 12px;
+      background: rgba(111, 77, 255, 0.12);
+      color: #d8d0ff;
+      font-size: 0.95rem;
+    }
+
+    .maintenance-card {
+      margin: 1rem auto 2rem;
+      background: linear-gradient(180deg, #171b2b 0%, #121523 100%);
+      border: 1px solid #2b3250;
+      border-radius: 18px;
+      padding: 1.5rem;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    }
+
+    .maint-head {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      color: var(--primary-soft);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .logo-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #8a71ff, #5a34ff);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+    }
+
+    .impact {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1rem;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .impact p { margin: 0.45rem 0; }
+    .impact strong { color: #fff; }
+
+    nav {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+      background: rgba(10, 11, 18, 0.7);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 100;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.95rem 0;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .menu {
+      display: flex;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+    }
+
+    .dashboard-link {
+      font-weight: 700;
+      color: #fff;
+      border: 1px solid var(--line);
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+    }
+
+    .hero {
+      padding: 2.2rem 0 1.2rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 2.9rem);
+      line-height: 1.2;
+    }
+
+    p.lead {
+      color: var(--muted);
+      max-width: 70ch;
+      margin: 1rem 0 1.5rem;
+    }
+
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.65rem 1rem;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--primary), #4f2fff);
+      border-color: transparent;
+    }
+
+    .highlight {
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    section {
+      padding: 1.9rem 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    h2 { margin-top: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1rem;
+    }
+
+    ul {
+      margin: 0.5rem 0 0;
+      padding-left: 1.2rem;
+      color: var(--muted);
+    }
+
+    .steps {
+      counter-reset: step;
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .step {
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem;
+      counter-increment: step;
+      position: relative;
+      padding-left: 3rem;
+    }
+
+    .step::before {
+      content: counter(step);
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 999px;
+      background: var(--primary);
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .price {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #171d33, #101423);
+      border-radius: 16px;
+      padding: 1.2rem;
+    }
+
+    .rating { color: #ffd370; }
+
+    footer {
+      padding: 1.5rem 0 2.2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container nav-inner">
+      <div class="maint-head" style="margin:0; text-transform:none; letter-spacing:0; color:white;">
+        <span class="logo-mark">V</span>
+        <span>Viracun</span>
+      </div>
+      <div class="menu">
+        <a href="#logo">Logo</a>
+        <a href="#produk">Produk</a>
+        <a href="#fitur">Fitur</a>
+        <a href="#review">Review</a>
+        <a href="#download">Download Aplikasi</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a class="dashboard-link" href="#">Dashboard →</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="notice">
+      ⚠️ Halaman maintenance aktif karena ada pemeliharaan server terjadwal. Beberapa layanan mungkin tidak tersedia sementara.
+    </div>
+
+    <article class="maintenance-card">
+      <div class="maint-head">
+        <span class="logo-mark">H</span>
+        HOSTINGER
+      </div>
+      <h2 style="margin-top:0;">Maintenance terjadwal VPS</h2>
+      <p>Halo, kami akan melakukan maintenance rutin pada VPS Anda untuk meningkatkan performa dan kecepatan. Selama proses ini, website akan offline dan tidak dapat diakses.</p>
+      <div class="impact">
+        <p><strong>VPS yang terdampak:</strong> srv410632.hstgr.cloud</p>
+        <p><strong>Tanggal maintenance:</strong> 2026-03-19 14:00 UTC</p>
+        <p><strong>Estimasi durasi:</strong> hingga 60 menit</p>
+      </div>
+      <p style="margin-top:1rem;">Punya pertanyaan? Silakan hubungi tim Customer Success kami. Terima kasih atas pengertian Anda.</p>
+    </article>
+
+    <section id="produk" class="hero">
+      <h1>Program Bimbel ASN Terbaik di Indonesia</h1>
+      <p class="lead">Siap tembus CPNS, Sekolah Kedinasan, dan PPPK bareng ribuan pejuang lainnya? Gabung di platform Bimbel Viracun – soal, materi, dan tryout-nya super mirip tes asli. Lebih gampang, lulus jadi lebih dekat!</p>
+      <div class="cta">
+        <a class="btn primary" href="#">Mulai Sekarang</a>
+        <a class="btn" href="#">Login</a>
+      </div>
+      <p class="highlight">Ribuan peserta kami bantu lulus menjadi ASN. Jadi peserta berikutnya →</p>
+    </section>
+
+    <section id="fitur">
+      <h2>Fitur Unggulan Viracun</h2>
+      <p class="lead">Persiapkan diri dengan fitur terbaik berbasis riset untuk menghadapi tes ASN dengan percaya diri.</p>
+      <div class="grid-4">
+        <div class="card">Bimbel ASN</div>
+        <div class="card">Tryout Simulasi</div>
+        <div class="card">Sistem Statistik</div>
+        <div class="card">Sistem Peringkat</div>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <h3 style="margin-top:0;">Fitur Viracun</h3>
+        <p>Bimbel Interaktif dengan Materi Terupdate</p>
+        <p class="lead" style="margin:0.5rem 0 0.8rem;">Dapatkan akses ke modul, latihan soal, dan pembelajaran interaktif yang dirancang khusus untuk tes ASN.</p>
+        <ul>
+          <li>Materi & soal terbaru</li>
+          <li>Analisis hasil otomatis</li>
+          <li>Simulasi ujian real-time</li>
+        </ul>
+        <p style="margin-top:1rem;"><a class="btn primary" href="#">Mulai Sekarang</a></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Cara Mudah Raih Impian Jadi ASN</h2>
+      <p class="lead">Kami telah merancang fitur berdasarkan riset terbaru untuk membantu anda menghadapi ujian.</p>
+      <div class="steps">
+        <div class="step"><strong>Daftar Akun</strong><br/>Buat akun dan mulai perjalananmu menjadi ASN dengan mengikuti program bimbel.</div>
+        <div class="step"><strong>Ikuti Program Bimbel</strong><br/>Dapatkan akses ke materi eksklusif dan latihan soal terbaru serta konsultasi.</div>
+        <div class="step"><strong>Become Winner</strong><br/>Tingkatkan skor ujian dan wujudkan impianmu menjadi ASN bersama Viracun.</div>
+      </div>
+    </section>
+
+    <section id="review">
+      <h2>Harga</h2>
+      <h3 style="margin-top:0;">Paket Pembelian Viracun</h3>
+      <p class="lead">Kami menyediakan berbagai paket yang dirancang untuk membantu Anda lulus seleksi CPNS & PPPK. Sesuaikan pilihan Anda berdasarkan kebutuhan belajar dan tujuan karier Anda!</p>
+      <div class="price">
+        <p style="margin-top:0;"><strong>Semua</strong></p>
+        <h3 style="margin:0;">Viracun - Bimbel & Tryout ASN No. 1 di Indonesia</h3>
+        <p class="rating">★★★★★</p>
+        <p>Persiapkan Masa Depanmu dengan Bimbel & Tryout ASN No.1 di Indonesia! Dapatkan pengalaman belajar terbaik dan raih skor tertinggi dalam tes CPNS & ujian kedinasan bersama Viracun.</p>
+        <ul>
+          <li>Program terstruktur & berbasis kurikulum terkini</li>
+          <li>Simulasi tryout dengan sistem CAT seperti ujian asli</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="faq">
+      <h2>Pertanyaan yang sering diajukan</h2>
+      <h3 style="margin-top:0;">Raih Impian Jadi ASN Bersama Kami</h3>
+      <p class="lead">Belajar seru dengan mentor terbaik, materi terkini, dan tryout berkualitas. Yuk, taklukkan tes CPNS dengan mudah!</p>
+      <div class="cta">
+        <a class="btn primary" href="#">Join Sekarang</a>
+        <a class="btn" href="#">Hubungi Kami →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" id="download">
+      <div>©2026 Viracun CPNS. Semua hak cipta dilindungi.</div>
+      <div>Company name</div>
+    </div>
+  </footer>
+</body>
+</html>
